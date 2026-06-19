@@ -1,0 +1,19 @@
+// For-Loop Spiral
+// Demonstrates the for loop with a growing step size.
+// Each iteration the sprite moves further than the last,
+// turning slightly each time to create a spiral.
+// No variables needed — the for loop creates [i] automatically.
+
+on flag {
+    goTo(0, 0)
+    setDirection(90)
+    setRotationStyle("all around")
+
+    for [i] from 1 to 80 {
+        move([i] * 1.5)
+        turnRight(47)
+        wait(0.02)
+    }
+
+    sayFor("Done.", 1)
+}

@@ -1,0 +1,42 @@
+// Sensing Radar
+// Demonstrates distanceTo, xOf, yOf, directionOf, and touching.
+//
+// This sprite acts as a "radar" — it continuously reports on what
+// it can sense about another sprite named "Target".
+//
+// In Scratch: create a second sprite named "Target" and move it around.
+// This sprite will report the distance and coordinates of Target in real time.
+//
+// Requires: variable [dist], variable [report]
+
+on flag {
+    forever {
+        set [dist] to distanceTo("Target")
+        set [report] to join("Dist: ", round([dist]))
+
+        if [dist] < 50 {
+            setEffect("color", 50)
+            say(join([report], " — CLOSE!"))
+        } else {
+            if [dist] < 120 {
+                setEffect("color", 20)
+                say(join([report], " — nearby"))
+            } else {
+                clearEffects()
+                say(join([report], " — far"))
+            }
+        }
+
+        wait(0.1)
+    }
+}
+
+// Click this sprite to get a full readout of Target's state
+on click {
+    sayFor(join("X: ", round(xOf("Target"))), 1)
+    sayFor(join("Y: ", round(yOf("Target"))), 1)
+    sayFor(join("Direction: ", round(directionOf("Target"))), 1)
+    sayFor(join("Size: ", sizeOf("Target")), 1)
+    sayFor(join("Costume: ", costumeNameOf("Target")), 1)
+    say("")
+}

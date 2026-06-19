@@ -1,0 +1,12 @@
+// Chase Mouse
+// Sprite continuously glides toward the mouse pointer.
+
+on flag {
+    forever {
+        glide(0.1, mouseX, mouseY)
+    }
+}
+
+on click {
+    sayFor("Ouch!", 1)
+}

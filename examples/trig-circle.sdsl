@@ -1,0 +1,24 @@
+// Trigonometric Circle
+// Uses sin() and cos() to move the sprite in a smooth circle.
+// Scratch trig uses degrees, not radians. Don't forget.
+//
+// Requires: variable [angle]
+//
+// The sprite traces a circle of radius 100 around the stage center.
+// Change [radius] to resize. Adjust the wait() to change speed.
+
+on flag {
+    set [angle] to 0
+
+    forever {
+        setX(cos([angle]) * 100)
+        setY(sin([angle]) * 100)
+        change [angle] by 3
+        wait(0.02)
+    }
+}
+
+// Bonus: hold space to make it go faster
+on key "space" {
+    change [angle] by 15
+}

@@ -1,0 +1,10 @@
+// Hello World
+// A basic script: say hello when the flag is clicked.
+
+on flag {
+    say("Hello, World!")
+    wait(2)
+    say("I'm a Scratch sprite!")
+    wait(2)
+    say("")
+}

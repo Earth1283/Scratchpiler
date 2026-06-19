@@ -1,0 +1,111 @@
+// Platformer — Full Template
+// A more complete movement system with jump, gravity, wall-wrap,
+// score, lives, and a restart flow.
+//
+// Requires: variables [velY], [score], [lives], [alive]
+//
+// Arrow keys to move, up arrow to jump.
+// Touching the bottom edge costs a life.
+// Score increases over time while alive.
+
+// ── Initialization ────────────────────────────────────────────────────────────
+
+on flag {
+    set [lives] to 3
+    set [score] to 0
+    set [alive] to 1
+    set [velY] to 0
+    goTo(0, -80)
+    setRotationStyle("left-right")
+    show()
+    broadcast("start round")
+}
+
+// ── Physics loop ──────────────────────────────────────────────────────────────
+
+on receive "start round" {
+    set [velY] to 0
+    set [alive] to 1
+
+    forever {
+        if [alive] = 0 {
+            stopThis()
+        }
+
+        // Gravity
+        [velY] -= 1
+        set [velY] to clamp([velY], -15, 15)
+        changeY([velY])
+
+        // Floor collision
+        if yPos < -160 {
+            setY(-160)
+            set [velY] to 0
+        }
+
+        // Horizontal movement
+        if key("right arrow") {
+            setDirection(90)
+            changeX(4)
+        }
+        if key("left arrow") {
+            setDirection(-90)
+            changeX(-4)
+        }
+
+        // Jump — only when on or near floor
+        if key("up arrow") {
+            if yPos < -140 {
+                set [velY] to 12
+            }
+        }
+
+        // Wrap horizontally
+        if xPos > 240 { setX(-240) }
+        if xPos < -240 { setX(240) }
+
+        // Fell off bottom
+        if yPos < -180 {
+            broadcast("player died")
+            stopThis()
+        }
+
+        // Score ticks up while alive
+        wait(0.5)
+        [score] += 1
+    }
+}
+
+// ── Death handling ────────────────────────────────────────────────────────────
+
+on receive "player died" {
+    set [alive] to 0
+    [lives] -= 1
+
+    if [lives] > 0 {
+        sayFor(join("Lives left: ", [lives]), 1.5)
+        say("")
+        goTo(0, -80)
+        broadcast("start round")
+    } else {
+        broadcast("game over")
+    }
+}
+
+// ── Game over ─────────────────────────────────────────────────────────────────
+
+on receive "game over" {
+    hide()
+    sayFor(join("Game over! Score: ", [score]), 3)
+    say("Press ENTER to restart.")
+}
+
+on key "enter" {
+    if [lives] = 0 {
+        set [lives] to 3
+        set [score] to 0
+        goTo(0, -80)
+        show()
+        broadcast("start round")
+    }
+}

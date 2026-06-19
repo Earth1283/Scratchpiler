@@ -1,0 +1,46 @@
+// Quiz Game
+// Demonstrates askAndWait() and answer.
+// Asks three questions and keeps score.
+//
+// Requires: variable [score], variable [userAnswer]
+
+on flag {
+    set [score] to 0
+
+    // Question 1
+    askAndWait("What does CPU stand for?")
+    set [userAnswer] to answer
+    if contains([userAnswer], "central") {
+        [score] += 1
+        sayFor("Correct!", 1)
+    } else {
+        sayFor(join("Nope. Central Processing Unit. You said: ", [userAnswer]), 2)
+    }
+
+    // Question 2
+    askAndWait("How many sides does a hexagon have?")
+    if answer = "6" {
+        [score] += 1
+        sayFor("Correct!", 1)
+    } else {
+        sayFor("It's 6. Hexa. Six. This one stings.", 2)
+    }
+
+    // Question 3
+    askAndWait("What year was Scratch launched?")
+    if answer = "2007" {
+        [score] += 1
+        sayFor("Correct!", 1)
+    } else {
+        sayFor("2007. So close, probably.", 2)
+    }
+
+    // Result
+    if [score] = 3 {
+        sayFor("Perfect score! Treat yourself.", 2)
+    } else {
+        sayFor(join(join("You got ", [score]), "/3. Study harder."), 2)
+    }
+
+    say("")
+}

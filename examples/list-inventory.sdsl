@@ -1,0 +1,59 @@
+// List Inventory System
+// Demonstrates list operations: add, delete, contains, item, indexOf, length.
+//
+// Requires: list [inventory]
+//
+// Press keys to manage an inventory:
+//   S  — pick up a sword
+//   P  — use (remove) a potion
+//   I  — inspect the first item
+//   C  — clear all items
+//   L  — say the full inventory length
+
+on flag {
+    listDeleteAll([inventory])
+    listAdd("torch", [inventory])
+    listAdd("map", [inventory])
+    sayFor("Inventory ready. Use S/P/I/C/L.", 2)
+    say("")
+}
+
+on key "s" {
+    if [inventory].contains("sword") {
+        sayFor("You already have a sword.", 1)
+    } else {
+        listAdd("sword", [inventory])
+        sayFor("Picked up sword.", 1)
+    }
+    say("")
+}
+
+on key "p" {
+    if [inventory].contains("potion") {
+        listDelete([inventory].indexOf("potion"), [inventory])
+        sayFor("Used a potion. Refreshing.", 1)
+    } else {
+        sayFor("No potion to use.", 1)
+    }
+    say("")
+}
+
+on key "i" {
+    if [inventory].length() > 0 {
+        sayFor(join("First item: ", [inventory].item(1)), 1.5)
+    } else {
+        sayFor("Inventory is empty.", 1)
+    }
+    say("")
+}
+
+on key "c" {
+    listDeleteAll([inventory])
+    sayFor("Inventory cleared.", 1)
+    say("")
+}
+
+on key "l" {
+    sayFor(join("Items: ", [inventory].length()), 1)
+    say("")
+}

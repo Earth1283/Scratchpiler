@@ -1,0 +1,78 @@
+// Math Functions Showcase
+// Demonstrates abs, round, floor, ceiling, sqrt, clamp, random,
+// and the compound assignment operators.
+//
+// Requires: variables [x], [result]
+//
+// Press each number key to run a different math demo.
+
+on flag {
+    sayFor("Press 1-7 to demo math functions.", 2)
+    say("")
+}
+
+// abs — distance from zero
+on key "1" {
+    set [x] to -42
+    set [result] to abs([x])
+    sayFor(join("abs(-42) = ", [result]), 2)
+    say("")
+}
+
+// round, floor, ceiling
+on key "2" {
+    set [x] to 3.7
+    sayFor(join("round(3.7) = ", round([x])), 1.5)
+    sayFor(join("floor(3.7) = ", floor([x])), 1.5)
+    sayFor(join("ceiling(3.7) = ", ceiling([x])), 1.5)
+    say("")
+}
+
+// sqrt
+on key "3" {
+    sayFor(join("sqrt(144) = ", sqrt(144)), 2)
+    sayFor(join("sqrt(2) ≈ ", round(sqrt(2) * 1000) / 1000), 2)
+    say("")
+}
+
+// random
+on key "4" {
+    set [result] to random(1, 100)
+    sayFor(join("random(1,100) = ", [result]), 2)
+    say("")
+}
+
+// clamp — constrain a value to a range
+on key "5" {
+    set [x] to 150
+    set [result] to clamp([x], 0, 100)
+    sayFor(join("clamp(150, 0, 100) = ", [result]), 2)
+    set [x] to -20
+    set [result] to clamp([x], 0, 100)
+    sayFor(join("clamp(-20, 0, 100) = ", [result]), 2)
+    say("")
+}
+
+// compound assignment operators
+on key "6" {
+    set [x] to 10
+    [x] += 5
+    sayFor(join("After += 5: ", [x]), 1)
+    [x] *= 2
+    sayFor(join("After *= 2: ", [x]), 1)
+    [x] -= 8
+    sayFor(join("After -= 8: ", [x]), 1)
+    [x] /= 2
+    sayFor(join("After /= 2: ", [x]), 1)
+    say("")
+}
+
+// mod — remainder
+on key "7" {
+    sayFor(join("17 mod 5 = ", 17 mod 5), 2)
+    sayFor(join("100 mod 7 = ", 100 mod 7), 2)
+    // Useful for wrapping values
+    set [x] to 365 mod 7
+    sayFor(join("365 mod 7 = ", join([x], " (day of week)")), 2)
+    say("")
+}

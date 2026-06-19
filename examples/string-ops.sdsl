@@ -1,0 +1,41 @@
+// String Operations
+// Demonstrates join, letterOf, contains, and .length().
+//
+// Requires: variables [word], [result], [i]
+//
+// Ask the user for a word and demonstrate string operations on it.
+
+on flag {
+    askAndWait("Enter a word:")
+    set [word] to answer
+
+    // Length
+    sayFor(join(join("Your word has ", [word].length()), " characters."), 2)
+
+    // First and last letters
+    sayFor(join("First letter: ", letterOf(1, [word])), 1.5)
+    sayFor(join("Last letter: ", letterOf([word].length(), [word])), 1.5)
+
+    // Contains check
+    if contains([word], "e") {
+        sayFor("Your word contains the letter 'e'. Common choice.", 1.5)
+    } else {
+        sayFor("No 'e' in your word. Bold.", 1.5)
+    }
+
+    // Spell it out letter by letter
+    sayFor("Spelling it out:", 1)
+    for [i] from 1 to [word].length() {
+        say(letterOf([i], [word]))
+        wait(0.3)
+    }
+
+    // Build a reversed version using join in a loop
+    set [result] to ""
+    for [i] from 1 to [word].length() {
+        set [result] to join(letterOf([i], [word]), [result])
+    }
+    sayFor(join("Reversed: ", [result]), 2)
+
+    say("")
+}

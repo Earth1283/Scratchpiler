@@ -1,6 +1,29 @@
 # Examples
 
-Full example programs demonstrating scratchpiler features. The `examples/` folder in this repository contains `.sdsl` files you can paste directly into the editor.
+Full example programs demonstrating scratchpiler features. Paste any `.sdsl` file from the `examples/` folder directly into the editor.
+
+## Example files
+
+| File | Demonstrates |
+|---|---|
+| `hello-world.sdsl` | First script, `say`, `wait` |
+| `bounce-loop.sdsl` | `forever`, `move`, `bounce` |
+| `chase-mouse.sdsl` | `glide`, `mouseX`/`mouseY`, `sayFor` |
+| `counter.sdsl` | Variables, `set`, `change`, `on key` |
+| `custom-blocks.sdsl` | `define`, custom block calls |
+| `platformer-move.sdsl` | Multiple hat blocks, arrow key movement |
+| `for-loop-spiral.sdsl` | `for` loop, growing step sizes |
+| `trig-circle.sdsl` | `sin`/`cos`, circular motion |
+| `list-inventory.sdsl` | List operations, dot methods, `.contains`, `.indexOf` |
+| `clones-burst.sdsl` | Clone creation, `on clone`, data passing |
+| `ask-quiz.sdsl` | `askAndWait`, `answer`, `contains` |
+| `graphic-effects.sdsl` | All seven graphic effects |
+| `broadcast-game.sdsl` | `broadcast`, `broadcastAndWait`, game state machine |
+| `timer-countdown.sdsl` | `timer`, `resetTimer`, `on timer >` |
+| `math-functions.sdsl` | `abs`, `round`, `clamp`, `random`, `mod`, compound assignment |
+| `string-ops.sdsl` | `join`, `letterOf`, `.length()`, string reversal |
+| `platformer-full.sdsl` | Full movement system with gravity, lives, score, broadcasts |
+| `sensing-radar.sdsl` | `distanceTo`, `xOf`, `yOf`, `directionOf`, `costumeNameOf` |
 
 ---
 

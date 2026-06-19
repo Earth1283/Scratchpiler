@@ -1,0 +1,37 @@
+// Clone Burst
+// Spawns a ring of clones that fly outward in all directions.
+// Click anywhere to trigger a burst.
+//
+// Requires: variable [cloneDir]
+//
+// Each clone gets a direction stored before it's created,
+// then reads it when it starts. This is the standard Scratch
+// pattern for passing data to clones — because there's no
+// constructor argument syntax, and there never will be.
+
+on flag {
+    show()
+    goTo(0, 0)
+}
+
+on click {
+    // Spawn 12 clones, one every 30 degrees
+    for [i] from 0 to 11 {
+        set [cloneDir] to [i] * 30
+        createClone()
+    }
+}
+
+on clone {
+    // Read the direction that was set before this clone was created
+    setDirection([cloneDir])
+    setRotationStyle("all around")
+
+    repeat 30 {
+        move(8)
+        changeSize(-2)
+        wait(0.02)
+    }
+
+    deleteClone()
+}

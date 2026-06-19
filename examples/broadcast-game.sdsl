@@ -1,0 +1,84 @@
+// Broadcast Coordination
+// Demonstrates broadcast and broadcastAndWait for multi-script coordination.
+//
+// This script manages a simple start → play → game-over flow using
+// broadcasts as state transitions. In a real project each script would
+// live in a different sprite; here they're all in one for demonstration.
+//
+// Requires: variables [score], [lives], [gameRunning]
+
+// ── Setup ────────────────────────────────────────────────────────────────────
+
+on flag {
+    set [score] to 0
+    set [lives] to 3
+    set [gameRunning] to 0
+    say("Press ENTER to start.")
+}
+
+on key "enter" {
+    if [gameRunning] = 0 {
+        broadcast("start game")
+    }
+}
+
+// ── Game start ────────────────────────────────────────────────────────────────
+
+on receive "start game" {
+    set [gameRunning] to 1
+    set [score] to 0
+    set [lives] to 3
+    sayFor("Game started!", 1)
+    say("")
+    broadcast("spawn enemy")
+}
+
+// ── Gameplay ──────────────────────────────────────────────────────────────────
+
+on receive "spawn enemy" {
+    // In a real game this would create a clone or move another sprite.
+    // Here we just simulate events with key presses.
+    sayFor("Enemy approaching! Press SPACE to defeat it.", 2)
+    say("")
+}
+
+on key "space" {
+    if [gameRunning] = 1 {
+        [score] += 10
+        sayFor(join("Hit! Score: ", [score]), 0.5)
+        say("")
+
+        if [score] >= 30 {
+            broadcast("you win")
+        } else {
+            broadcast("spawn enemy")
+        }
+    }
+}
+
+on key "d" {
+    // Simulate taking damage
+    if [gameRunning] = 1 {
+        [lives] -= 1
+        sayFor(join("Ouch! Lives left: ", [lives]), 0.5)
+        say("")
+
+        if [lives] = 0 {
+            broadcast("game over")
+        }
+    }
+}
+
+// ── End states ────────────────────────────────────────────────────────────────
+
+on receive "game over" {
+    set [gameRunning] to 0
+    sayFor(join("Game over. Final score: ", [score]), 3)
+    say("Press ENTER to play again.")
+}
+
+on receive "you win" {
+    set [gameRunning] to 0
+    sayFor(join("You win! Score: ", [score]), 3)
+    say("Press ENTER to play again.")
+}

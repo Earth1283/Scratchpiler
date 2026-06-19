@@ -1,0 +1,52 @@
+// Countdown Timer
+// Demonstrates timer, resetTimer(), and on timer > n hat blocks.
+//
+// Requires: variable [timeLeft], variable [running]
+//
+// Press ENTER to start a 10-second countdown.
+// The sprite counts down aloud and reports when time is up.
+// Press R to reset.
+
+on flag {
+    set [running] to 0
+    set [timeLeft] to 10
+    sayFor("Press ENTER to start the countdown.", 2)
+    say("")
+}
+
+on key "enter" {
+    if [running] = 0 {
+        set [running] to 1
+        set [timeLeft] to 10
+        resetTimer()
+
+        // Count down every second
+        repeat 10 {
+            say(join("Time: ", [timeLeft]))
+            wait(1)
+            [timeLeft] -= 1
+        }
+
+        say("Time's up!")
+        set [running] to 0
+        wait(2)
+        say("")
+    }
+}
+
+on key "r" {
+    set [running] to 0
+    set [timeLeft] to 10
+    resetTimer()
+    sayFor("Reset.", 0.5)
+    say("")
+}
+
+// You can also use the hat block form for timer thresholds.
+// This fires once when the timer crosses 5 seconds:
+on timer > 5 {
+    if [running] = 1 {
+        // Could play a warning sound here
+        // play("warning")
+    }
+}

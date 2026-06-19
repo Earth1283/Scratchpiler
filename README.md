@@ -92,8 +92,16 @@ Blocks are injected into the selected sprite. Variables must already exist in Sc
 
 ## Documentation
 
+**New? Start here:** [docs/getting-started.md](docs/getting-started.md) — a step-by-step tutorial from zero to a working program.
+
+**Looking something up?** [docs/quick-reference.md](docs/quick-reference.md) — every function and keyword on one page.
+
+### Full reference
+
 | File | Contents |
 |---|---|
+| [docs/getting-started.md](docs/getting-started.md) | Tutorial: from zero to first program |
+| [docs/quick-reference.md](docs/quick-reference.md) | All syntax and functions on one page |
 | [docs/overview.md](docs/overview.md) | How the pipeline works |
 | [docs/syntax.md](docs/syntax.md) | Tokens, operators, expressions |
 | [docs/control-flow.md](docs/control-flow.md) | Hat blocks, loops, conditionals |

@@ -1,0 +1,13 @@
+// Bounce Loop
+// Sprite moves and bounces forever when flag is clicked.
+
+on flag {
+    forever {
+        move(10)
+        bounce()
+    }
+}
+
+on key "space" {
+    turnRight(15)
+}

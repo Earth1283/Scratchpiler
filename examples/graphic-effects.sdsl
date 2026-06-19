@@ -1,0 +1,88 @@
+// Graphic Effects Showcase
+// Cycles through all seven Scratch graphic effects.
+// Press space to advance through the effects.
+// Press R to reset everything.
+//
+// No variables required.
+
+on flag {
+    clearEffects()
+    setSize(100)
+    show()
+    sayFor("Press SPACE to cycle effects. R to reset.", 2)
+    say("")
+}
+
+// Color rotation — hue cycles 0-360
+on key "1" {
+    sayFor("color effect", 0.5)
+    for [i] from 0 to 35 {
+        changeEffect("color", 10)
+        wait(0.05)
+    }
+    say("")
+}
+
+// Ghost — transparency
+on key "2" {
+    sayFor("ghost effect", 0.5)
+    for [i] from 0 to 9 {
+        changeEffect("ghost", 10)
+        wait(0.1)
+    }
+    for [i] from 0 to 9 {
+        changeEffect("ghost", -10)
+        wait(0.1)
+    }
+    say("")
+}
+
+// Whirl
+on key "3" {
+    sayFor("whirl effect", 0.5)
+    for [i] from 0 to 19 {
+        changeEffect("whirl", 18)
+        wait(0.05)
+    }
+    for [i] from 0 to 19 {
+        changeEffect("whirl", -18)
+        wait(0.05)
+    }
+    say("")
+}
+
+// Pixelate
+on key "4" {
+    sayFor("pixelate effect", 0.5)
+    for [i] from 0 to 9 {
+        changeEffect("pixelate", 5)
+        wait(0.1)
+    }
+    for [i] from 0 to 9 {
+        changeEffect("pixelate", -5)
+        wait(0.1)
+    }
+    say("")
+}
+
+// Brightness pulse
+on key "5" {
+    sayFor("brightness effect", 0.5)
+    for [i] from 0 to 9 {
+        changeEffect("brightness", 10)
+        wait(0.05)
+    }
+    for [i] from 0 to 9 {
+        changeEffect("brightness", -10)
+        wait(0.05)
+    }
+    say("")
+}
+
+// Reset
+on key "r" {
+    clearEffects()
+    setSize(100)
+    sayFor("Reset.", 0.5)
+    say("")
+}
