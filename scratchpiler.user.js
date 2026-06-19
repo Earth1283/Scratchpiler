@@ -1033,6 +1033,85 @@
                 #scratchpiler-close-btn, #scratchpiler-trigger,
                 .sp-menu-btn, .sp-dialog-btn { transition: none; }
             }
+
+            /* ── Search Nowhere ─────────────────────────────────────────────────── */
+            #sp-sn-backdrop {
+                position: fixed; inset: 0; z-index: 999999;
+                display: flex; align-items: flex-start; justify-content: center;
+                padding-top: 72px;
+                background: rgba(0,6,18,0.65); backdrop-filter: blur(3px);
+            }
+            #sp-sn-modal {
+                width: min(680px, 90vw); background: #191e2d;
+                border: 1px solid #2a3550; border-radius: 8px;
+                box-shadow: 0 20px 70px rgba(0,0,0,0.75);
+                display: flex; flex-direction: column; overflow: hidden;
+                max-height: 72vh;
+                font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            }
+            #sp-sn-header {
+                display: flex; align-items: center; gap: 10px;
+                padding: 11px 16px; border-bottom: 1px solid #212a3f;
+                background: #1c2236; flex-shrink: 0;
+            }
+            #sp-sn-icon { color: #ff8c00; flex-shrink: 0; }
+            #sp-sn-input {
+                flex: 1; background: transparent; border: none; outline: none;
+                color: #e0eeff; font-family: inherit; font-size: 15px;
+                caret-color: #ff8c00; min-width: 0;
+            }
+            #sp-sn-input::placeholder { color: #35486a; }
+            #sp-sn-hint { font-size: 10px; color: #2d3f58; font-family: ui-monospace, monospace; flex-shrink: 0; white-space: nowrap; }
+            #sp-sn-tabs {
+                display: flex; border-bottom: 1px solid #212a3f;
+                background: #191e2d; padding: 0 8px; gap: 2px; flex-shrink: 0;
+            }
+            .sp-sn-tab {
+                background: transparent; border: none; color: #4d6588;
+                font-family: inherit; font-size: 12px; padding: 8px 14px;
+                cursor: pointer; border-bottom: 2px solid transparent;
+                transition: color 0.1s, border-color 0.1s; margin-bottom: -1px;
+                white-space: nowrap;
+            }
+            .sp-sn-tab:hover { color: #8fafd4; }
+            .sp-sn-tab.sp-sn-active { color: #ddeeff; border-bottom-color: #ff8c00; }
+            .sp-sn-tab-void { color: #7a4a8a !important; }
+            .sp-sn-tab-void:hover { color: #b07ac0 !important; }
+            .sp-sn-tab-void.sp-sn-active { color: #c898d8 !important; border-bottom-color: #9b59b6 !important; }
+            #sp-sn-results { flex: 1; overflow-y: auto; min-height: 0; }
+            .sp-sn-group-header {
+                padding: 5px 16px; font-size: 10px; font-weight: 700;
+                letter-spacing: 0.1em; text-transform: uppercase;
+                color: #3d5270; background: #141824;
+                border-top: 1px solid #1c2236; border-bottom: 1px solid #1c2236;
+                user-select: none; position: sticky; top: 0;
+            }
+            .sp-sn-result {
+                display: flex; align-items: center; gap: 10px;
+                padding: 6px 16px; cursor: pointer; min-height: 34px;
+                transition: background 0.07s;
+            }
+            .sp-sn-result:hover, .sp-sn-result.sp-sn-focused { background: #223050; }
+            .sp-sn-result.sp-sn-void:hover, .sp-sn-result.sp-sn-void.sp-sn-focused { background: #1e1028; }
+            .sp-sn-result-icon { flex-shrink: 0; font-size: 12px; width: 18px; text-align: center; color: #4d6588; }
+            .sp-sn-result.sp-sn-void .sp-sn-result-icon { color: #7a4a8a; }
+            .sp-sn-result-main { flex: 1; min-width: 0; }
+            .sp-sn-result-label { font-size: 13px; color: #bdd4ee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+            .sp-sn-result-label em { color: #ff8c00; font-style: normal; font-weight: 600; }
+            .sp-sn-result.sp-sn-void .sp-sn-result-label { color: #9070a8; }
+            .sp-sn-result-sub { font-size: 11px; color: #3d5270; font-family: ui-monospace, 'SF Mono', Consolas, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; display: block; }
+            .sp-sn-result.sp-sn-void .sp-sn-result-sub { color: #4a2d5a; }
+            .sp-sn-result-badge { font-size: 10px; color: #3d5270; flex-shrink: 0; background: #141824; padding: 1px 5px; border-radius: 3px; font-family: ui-monospace, monospace; }
+            .sp-sn-pro { font-size: 9px; background: linear-gradient(90deg,#b8860b,#daa520); color: #100800; padding: 1px 4px; border-radius: 2px; font-weight: 800; vertical-align: middle; margin-left: 4px; letter-spacing: 0.04em; }
+            .sp-sn-empty { padding: 32px 16px; text-align: center; color: #35486a; font-size: 13px; line-height: 1.6; }
+            .sp-sn-empty-icon { font-size: 26px; margin-bottom: 8px; }
+            #sp-sn-footer {
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 5px 16px; border-top: 1px solid #1c2236;
+                background: #141824; flex-shrink: 0;
+            }
+            #sp-sn-status { font-size: 11px; color: #3d5270; }
+            #sp-sn-tip { font-size: 10px; color: #263040; font-family: ui-monospace, monospace; }
         `;
         document.head.appendChild(style);
 
@@ -1228,6 +1307,316 @@
         btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4.5l5.5 5-5.5 5" stroke="#ff8c00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14.5h3.5" stroke="#ff8c00" stroke-width="2" stroke-linecap="round"/></svg>Open Scratchpiler`;
         btn.addEventListener('click', openOverlay);
         document.body.appendChild(btn);
+    }
+
+    // ─── [SN] Search Nowhere ─────────────────────────────────────────────────
+
+    let searchNowhereOpen = false;
+    let snActiveTab = 'all';
+    let snFocusIdx = -1;
+
+    const SN_VOID_RESULTS = [
+        { icon: '∅', label: '1 match found in /dev/null',          sub: '/dev/null — read-only, as always',                                           isVoid: true },
+        { icon: '∅', label: '3 results evaporated during search',   sub: 'Cause: quantum measurement interference',                                    isVoid: true },
+        { icon: '∅', label: 'Found in TODO.md',                     sub: 'TODO.md — never written, never read, never will be',                         isVoid: true },
+        { icon: '∅', label: 'Located in Parallel Universe #7',      sub: 'Access requires inter-dimensional IDE license (yours expired)',               isVoid: true },
+        { icon: '∅', label: 'Cached result from 1970-01-01',        sub: 'Cache TTL: ∞  ·  Source: unknown  ·  Trust: none',                          isVoid: true },
+        { icon: '∅', label: 'Stored in $SCRATCH_HOME',              sub: '$SCRATCH_HOME is undefined (always has been)',                               isVoid: true },
+        { icon: '∅', label: 'Exists in production only',            sub: 'Works on my machine™  ·  target: not your machine',                          isVoid: true },
+        { icon: '∅', label: 'Hidden in a deleted comment',          sub: '// ← removed last week, reason: "makes no sense"',                          isVoid: true },
+        { icon: '∅', label: 'Result is loading…',                   sub: '(has been loading since 2019)',                                              isVoid: true },
+    ];
+
+    const SN_FAKE_ACTIONS = [
+        { icon: '☁', label: 'Upload to Scratch Cloud™',            sub: 'Action  ·  Requires premium  ·  Not a real feature',         isFake: true, pro: true  },
+        { icon: '↩', label: 'Undo All Mistakes (Career)',           sub: 'Action  ·  Lifetime Undo™  ·  Requires full system reboot',  isFake: true, pro: true  },
+        { icon: '◑', label: 'Enable Dark Dark Mode',               sub: 'Action  ·  Screen goes fully black  ·  May cause confusion',  isFake: true            },
+        { icon: '⚙', label: 'Let AI Write This For You',           sub: 'Action  ·  Opens the void  ·  Results: unknowable',           isFake: true, pro: true  },
+        { icon: '▲', label: 'Deploy to Production',                sub: 'Action  ·  Scratch has no production  ·  Good luck anyway',   isFake: true            },
+        { icon: '⌖', label: 'Search Somewhere',                    sub: 'Action  ·  Premium upgrade of Search Nowhere  ·  Finds things', isFake: true, pro: true },
+    ];
+
+    function snGetRealActions() {
+        return [
+            { icon: '▶', label: 'Compile & Inject',       sub: 'Action  ·  Ctrl+Enter',  action: () => document.getElementById('scratchpiler-compile-btn')?.click() },
+            { icon: '⟳', label: 'Format Document',        sub: 'Action  ·  Edit menu',   action: () => monacoEditor?.getAction('editor.action.formatDocument').run() },
+            { icon: '↺', label: 'Invalidate & Re-Index',  sub: 'Action  ·  Fixes panel', action: () => document.getElementById('sp-fix-reindex')?.click() },
+            { icon: '⌫', label: 'Clear Code Cache',       sub: 'Action  ·  Fixes panel', action: () => document.getElementById('sp-fix-clear-cache')?.click() },
+            { icon: '↓', label: 'Import from File',       sub: 'Action  ·  File menu',   action: importFromLocalFile },
+            { icon: '↑', label: 'Export to File',         sub: 'Action  ·  File menu',   action: exportToLocalFile },
+            { icon: '✕', label: 'Close Scratchpiler',     sub: 'Action  ·  Escape',      action: () => { if (overlayVisible) closeOverlay(); } },
+        ];
+    }
+
+    function buildSearchNowhereDOM() {
+        const backdrop = document.createElement('div');
+        backdrop.id = 'sp-sn-backdrop';
+        backdrop.style.display = 'none';
+        backdrop.innerHTML = `
+            <div id="sp-sn-modal" role="dialog" aria-modal="true" aria-label="Search Nowhere">
+                <div id="sp-sn-header">
+                    <svg id="sp-sn-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input id="sp-sn-input" autocomplete="off" spellcheck="false" placeholder="Search Nowhere…" />
+                    <span id="sp-sn-hint">⇧⇧ · Esc</span>
+                </div>
+                <div id="sp-sn-tabs">
+                    <button class="sp-sn-tab sp-sn-active" data-tab="all">All</button>
+                    <button class="sp-sn-tab" data-tab="sprites">Sprites</button>
+                    <button class="sp-sn-tab" data-tab="blocks">Blocks</button>
+                    <button class="sp-sn-tab" data-tab="actions">Actions</button>
+                    <button class="sp-sn-tab sp-sn-tab-void" data-tab="void">The Void</button>
+                </div>
+                <div id="sp-sn-results"></div>
+                <div id="sp-sn-footer">
+                    <span id="sp-sn-status">Type to search nowhere</span>
+                    <span id="sp-sn-tip">↑↓ navigate  ·  Enter select  ·  Tab switch tab  ·  Esc close</span>
+                </div>
+            </div>
+        `;
+
+        backdrop.addEventListener('mousedown', e => { if (e.target === backdrop) closeSearchNowhere(); });
+
+        const input = backdrop.querySelector('#sp-sn-input');
+        input.addEventListener('input', () => { snFocusIdx = -1; snRenderResults(); });
+        input.addEventListener('keydown', e => {
+            if (e.key === 'Escape') { closeSearchNowhere(); return; }
+            const items = document.querySelectorAll('#sp-sn-results .sp-sn-result');
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                snFocusIdx = Math.min(snFocusIdx + 1, items.length - 1);
+                snUpdateFocus(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                snFocusIdx = Math.max(snFocusIdx - 1, -1);
+                snUpdateFocus(items);
+            } else if (e.key === 'Enter') {
+                if (snFocusIdx >= 0 && items[snFocusIdx]) items[snFocusIdx].click();
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                const tabs = ['all', 'sprites', 'blocks', 'actions', 'void'];
+                snSwitchTab(tabs[(tabs.indexOf(snActiveTab) + 1) % tabs.length]);
+            }
+        });
+
+        backdrop.querySelectorAll('.sp-sn-tab').forEach(tab =>
+            tab.addEventListener('click', () => { snSwitchTab(tab.dataset.tab); input.focus(); })
+        );
+
+        document.body.appendChild(backdrop);
+    }
+
+    function snSwitchTab(tabId) {
+        snActiveTab = tabId; snFocusIdx = -1;
+        document.querySelectorAll('.sp-sn-tab').forEach(t =>
+            t.classList.toggle('sp-sn-active', t.dataset.tab === tabId));
+        snRenderResults();
+    }
+
+    function snUpdateFocus(items) {
+        items.forEach((r, i) => {
+            r.classList.toggle('sp-sn-focused', i === snFocusIdx);
+            if (i === snFocusIdx) r.scrollIntoView({ block: 'nearest' });
+        });
+    }
+
+    function openSearchNowhere() {
+        if (searchNowhereOpen) return;
+        const backdrop = document.getElementById('sp-sn-backdrop');
+        if (!backdrop) return;
+        backdrop.style.display = 'flex';
+        searchNowhereOpen = true;
+        snActiveTab = 'all'; snFocusIdx = -1;
+        document.querySelectorAll('.sp-sn-tab').forEach(t =>
+            t.classList.toggle('sp-sn-active', t.dataset.tab === 'all'));
+        const input = document.getElementById('sp-sn-input');
+        if (input) { input.value = ''; input.focus(); }
+        snRenderResults();
+    }
+
+    function closeSearchNowhere() {
+        const backdrop = document.getElementById('sp-sn-backdrop');
+        if (backdrop) backdrop.style.display = 'none';
+        searchNowhereOpen = false;
+    }
+
+    function snEscHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function snHighlight(text, query) {
+        const safe = snEscHtml(text);
+        if (!query) return safe;
+        const re = new RegExp(`(${query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+        return safe.replace(re, '<em>$1</em>');
+    }
+
+    const SN_VOID_JOKES = [
+        'Access denied by the void.',
+        'Connection to /dev/null timed out.',
+        'Result has already evaporated.',
+        'This result does not exist in this dimension.',
+        'Error 404: result not found anywhere.',
+        'Your request has been noted. It will be ignored.',
+        'Cannot open a portal to /dev/null at this time.',
+    ];
+
+    function snMakeResultEl(item, query, forceVoid) {
+        const isVoid = forceVoid || item.isVoid || item.isFake;
+        const el = document.createElement('div');
+        el.className = 'sp-sn-result' + (isVoid ? ' sp-sn-void' : '');
+        const pro  = item.pro  ? '<span class="sp-sn-pro">PRO</span>' : '';
+        const badge = item.isFake
+            ? '<span class="sp-sn-result-badge">fake</span>'
+            : (item.action || item.jumpTo ? '<span class="sp-sn-result-badge">real</span>' : '');
+        el.innerHTML = `
+            <span class="sp-sn-result-icon">${snEscHtml(item.icon || '·')}</span>
+            <span class="sp-sn-result-main">
+                <span class="sp-sn-result-label">${snHighlight(item.label, query)}${pro}</span>
+                ${item.sub ? `<span class="sp-sn-result-sub">${snEscHtml(item.sub)}</span>` : ''}
+            </span>
+            ${badge}
+        `;
+        el.addEventListener('click', () => {
+            if (item.action)  { closeSearchNowhere(); item.action();  }
+            else if (item.jumpTo) { closeSearchNowhere(); item.jumpTo(); }
+            else {
+                const st = document.getElementById('sp-sn-status');
+                if (st) st.textContent = SN_VOID_JOKES[Math.floor(Math.random() * SN_VOID_JOKES.length)];
+            }
+        });
+        return el;
+    }
+
+    function snRenderSection(container, header, items, query, isVoid) {
+        if (!items.length) return;
+        const hdr = document.createElement('div');
+        hdr.className = 'sp-sn-group-header';
+        hdr.textContent = header;
+        container.appendChild(hdr);
+        for (const item of items)
+            container.appendChild(snMakeResultEl(item, query, isVoid));
+    }
+
+    function snEmptyState(container, msg) {
+        container.innerHTML = `<div class="sp-sn-empty"><div class="sp-sn-empty-icon">🕳</div>${snEscHtml(msg || 'Nothing found here either.')}<br><span style="font-size:11px;color:#263040">This is Search Nowhere. What did you expect?</span></div>`;
+    }
+
+    function snGetSpriteResults(query) {
+        const all = [
+            { name: '__stage__', label: 'Stage.sp', icon: '▣', sub: `Stage  ·  ${scratchIndex.stage.backdrops.length} backdrop(s)  ·  ${scratchIndex.globalVariables.length} global var(s)` },
+            ...scratchIndex.sprites.map(s => ({
+                name: s.name, label: `${s.name}.sp`, icon: '◻',
+                sub: `Sprite  ·  ${s.costumes.length} costume(s)  ·  ${(scratchIndex.spriteVariables[s.name] || []).length} var(s)`,
+            })),
+        ];
+        return all
+            .filter(s => !query || s.label.toLowerCase().includes(query.toLowerCase()) || s.name.toLowerCase().includes(query.toLowerCase()))
+            .map(s => ({
+                ...s,
+                jumpTo: () => {
+                    if (!overlayVisible) openOverlay();
+                    setTimeout(() => selectSidebarSprite(s.name), overlayVisible ? 0 : 150);
+                },
+            }));
+    }
+
+    function snGetBlockResults(query) {
+        if (!query) return [];
+        const raw = [];
+        searchCode(localStorage.getItem('scratchpiler-content-__stage__') || '', '__stage__', query, raw);
+        for (const s of scratchIndex.sprites)
+            searchCode(localStorage.getItem(`scratchpiler-content-${s.name}`) || '', s.name, query, raw);
+        return raw.slice(0, 50).map(m => ({
+            icon: '≡',
+            label: m.text || '(empty line)',
+            sub: `${m.spriteName === '__stage__' ? 'Stage' : m.spriteName}.sp  ·  Line ${m.line}`,
+            _sprite: m.spriteName,
+            jumpTo: () => {
+                const go = () => {
+                    selectSidebarSprite(m.spriteName);
+                    if (monacoEditor) {
+                        monacoEditor.setPosition({ lineNumber: m.line, column: 1 });
+                        monacoEditor.revealLineInCenter(m.line);
+                        monacoEditor.focus();
+                    }
+                };
+                if (!overlayVisible) { openOverlay(); setTimeout(go, 150); } else go();
+            },
+        }));
+    }
+
+    function snRenderResults() {
+        const query     = (document.getElementById('sp-sn-input')?.value || '').trim();
+        const resultsEl = document.getElementById('sp-sn-results');
+        const statusEl  = document.getElementById('sp-sn-status');
+        if (!resultsEl) return;
+        resultsEl.innerHTML = '';
+        snFocusIdx = -1;
+
+        if (snActiveTab === 'void') {
+            const items = [...SN_VOID_RESULTS];
+            if (query) items.unshift({ icon: '∅', label: `"${query}" found in The Void`, sub: 'Cannot access  ·  Forbidden by cosmic law  ·  Try again: never', isVoid: true });
+            snRenderSection(resultsEl, 'The Void', items, query, true);
+            if (statusEl) statusEl.textContent = `${items.length} result${items.length !== 1 ? 's' : ''}  ·  none accessible  ·  this is fine`;
+            return;
+        }
+
+        if (snActiveTab === 'sprites') {
+            const real = snGetSpriteResults(query);
+            const ghosts = [
+                { icon: '👻', label: 'Sprite3.sp',        sub: 'Ghost  ·  Deleted 2 saves ago  ·  Still haunting the VM', isVoid: true },
+                { icon: '👻', label: 'Stage.sp (backup)', sub: 'Ghost  ·  Exists in your heart only',                      isVoid: true },
+            ];
+            snRenderSection(resultsEl, 'Sprites', real, query, false);
+            snRenderSection(resultsEl, 'Ghost Sprites', ghosts, query, true);
+            if (!real.length && !ghosts.length) snEmptyState(resultsEl);
+            if (statusEl) statusEl.textContent = `${real.length} sprite${real.length !== 1 ? 's' : ''}  ·  plus ${ghosts.length} haunted`;
+            return;
+        }
+
+        if (snActiveTab === 'blocks') {
+            const items = snGetBlockResults(query);
+            snRenderSection(resultsEl, 'Code Matches', items, query, false);
+            if (!items.length) snEmptyState(resultsEl, query ? 'No matches found. (Searched: nowhere.)' : 'Type to search code blocks');
+            if (statusEl) {
+                const spriteCount = new Set(items.map(i => i._sprite)).size;
+                statusEl.textContent = items.length === 0
+                    ? (query ? 'No matches  ·  checked everywhere  ·  found nowhere' : 'Type to search blocks')
+                    : `${items.length} match${items.length !== 1 ? 'es' : ''}  ·  across ${spriteCount} sprite${spriteCount !== 1 ? 's' : ''}`;
+            }
+            return;
+        }
+
+        if (snActiveTab === 'actions') {
+            const real = snGetRealActions().filter(a => !query || a.label.toLowerCase().includes(query.toLowerCase()));
+            const fake = SN_FAKE_ACTIONS.filter(a => !query || a.label.toLowerCase().includes(query.toLowerCase()));
+            snRenderSection(resultsEl, 'Actions', real, query, false);
+            snRenderSection(resultsEl, 'Definitely Real Actions™', fake, query, true);
+            if (!real.length && !fake.length) snEmptyState(resultsEl);
+            if (statusEl) statusEl.textContent = `${real.length} action${real.length !== 1 ? 's' : ''}  ·  ${fake.length} "action${fake.length !== 1 ? 's' : ''}"`;
+            return;
+        }
+
+        // ── All tab ──
+        const sprites     = snGetSpriteResults(query);
+        const blocks      = snGetBlockResults(query);
+        const realActions = snGetRealActions().filter(a => !query || a.label.toLowerCase().includes(query.toLowerCase()));
+        const fakeActions = query ? SN_FAKE_ACTIONS.filter(a => a.label.toLowerCase().includes(query.toLowerCase())) : SN_FAKE_ACTIONS.slice(0, 2);
+        const voidPeek    = query
+            ? [{ icon: '∅', label: `"${query}" found in The Void`, sub: 'Cannot access  ·  See The Void tab for more', isVoid: true }]
+            : [SN_VOID_RESULTS[0], SN_VOID_RESULTS[1]];
+
+        snRenderSection(resultsEl, 'Sprites', sprites, query, false);
+        snRenderSection(resultsEl, 'Blocks',  blocks,  query, false);
+        snRenderSection(resultsEl, 'Actions', [...realActions, ...fakeActions], query, false);
+        snRenderSection(resultsEl, 'The Void', voidPeek, query, true);
+
+        const totalReal = sprites.length + blocks.length + realActions.length;
+        const totalFake = fakeActions.length + voidPeek.length;
+        if (!totalReal && !totalFake) snEmptyState(resultsEl);
+        if (statusEl) statusEl.textContent = !totalReal && !totalFake
+            ? 'No results found (as expected)'
+            : `${totalReal} result${totalReal !== 1 ? 's' : ''}  ·  ${totalFake} fabricated`;
     }
 
     // ─── [I] Editor Lifecycle ─────────────────────────────────────────────────
@@ -1826,11 +2215,27 @@
         document.addEventListener('keydown', e => {
             if (e.altKey && !e.ctrlKey && !e.metaKey && e.code === 'KeyM') {
                 e.preventDefault(); e.stopPropagation(); toggleOverlay();
+            } else if (e.key === 'Escape' && searchNowhereOpen) {
+                e.preventDefault(); e.stopPropagation(); closeSearchNowhere();
             } else if (e.key === 'Escape' && overlayVisible) {
                 e.preventDefault(); e.stopPropagation(); closeOverlay();
             } else if ((e.ctrlKey || e.metaKey) && (e.key === 'Enter' || e.key === 's') && overlayVisible) {
                 e.preventDefault(); e.stopPropagation();
                 document.getElementById('scratchpiler-compile-btn').click();
+            }
+        }, true);
+
+        // Double-Shift opens/closes Search Nowhere (⇧⇧)
+        let _snLastShift = 0;
+        document.addEventListener('keyup', e => {
+            if (e.key === 'Shift' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+                const now = Date.now();
+                if (now - _snLastShift < 400) {
+                    _snLastShift = 0;
+                    if (searchNowhereOpen) closeSearchNowhere(); else openSearchNowhere();
+                } else {
+                    _snLastShift = now;
+                }
             }
         }, true);
     }
@@ -4585,6 +4990,7 @@
     function bootstrap() {
         buildOverlayDOM();
         buildTriggerButton();
+        buildSearchNowhereDOM();
         registerHotkeys();
 
         document.getElementById('scratchpiler-close-btn').addEventListener('click', closeOverlay);
