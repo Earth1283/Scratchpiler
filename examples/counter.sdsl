@@ -1,0 +1,14 @@
+// Counter
+// Uses a variable to count key presses.
+// Create a variable named "score" in Scratch before compiling.
+
+on flag {
+    set [score] to 0
+}
+
+on key "space" {
+    change [score] by 1
+    say([score])
+    wait(0.5)
+    say("")
+}

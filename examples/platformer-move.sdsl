@@ -1,0 +1,16 @@
+// Platformer Movement
+// Left/right/up/down arrow keys move the sprite.
+// Demonstrates multiple hat blocks and conditionals.
+
+on flag {
+    forever {
+        if touching("_edge_") {
+            bounce()
+        }
+    }
+}
+
+on key "right arrow" { changeX(5) }
+on key "left arrow"  { changeX(-5) }
+on key "up arrow"    { changeY(5) }
+on key "down arrow"  { changeY(-5) }

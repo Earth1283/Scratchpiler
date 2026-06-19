@@ -1,0 +1,15 @@
+// Custom Blocks
+// Demonstrates define blocks (custom blocks / procedures).
+
+define zigzag(steps) {
+    move([steps])
+    turnRight(90)
+    move([steps])
+    turnLeft(90)
+}
+
+on flag {
+    repeat 5 {
+        zigzag(20)
+    }
+}
